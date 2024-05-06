@@ -10,7 +10,6 @@ const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 const axios = require("axios");
 const { file } = require("googleapis/build/src/apis/file");
-
 const pathKey = path.resolve(__dirname, "./serviceaccountkey.json");
 const storage = new Storage({
   projectId: "apiecocycle",
@@ -455,6 +454,9 @@ app.get("/userimages", accessValidation, async (req, res) => {
     const userImages = await prisma.image.findMany({
       where: {
         userId: userId,
+      },
+      orderBy: {
+        createdAt: "desc", // Menambahkan orderBy untuk mengurutkan berdasarkan createdAt secara descending
       },
     });
 
